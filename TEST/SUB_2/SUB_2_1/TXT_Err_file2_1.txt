@@ -1,0 +1,10 @@
+[LOG | ERROR 2019 December, 9 14:04:30 ] (1)
+This string cannot has null pointer exception.
+[END]
+Exception in thread "main" java.lang.NullPointerException
+	at pl.wiktor.Main.main(Main.java:8)
+[LOG | ERROR 2019 December, 9 14:04:30 ] (2)
+This string cannot has null pointer exception.
+[END]
+Exception in thread "main" java.lang.NullPointerException
+	at pl.wiktor.Main.main(Main.java:8)
