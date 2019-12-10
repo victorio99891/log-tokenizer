@@ -1,4 +1,6 @@
-package pl.wiktor;
+package pl.wiktor.explorer;
+
+import pl.wiktor.parser.LogFileParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,13 +9,11 @@ import java.util.List;
 
 public class DirectoryExplorer {
 
-    public static void main(String[] args) throws IOException {
-
-        final String EXAMPLE_ABSOLUTE_PATH = "TEST";
+    public static List<String> explore(String dirPathToScan) throws IOException {
 
         List<String> logsArray = new ArrayList<>();
 
-        File[] fileArray = new File(EXAMPLE_ABSOLUTE_PATH).listFiles();
+        File[] fileArray = new File(dirPathToScan).listFiles();
 
         int level = 0;
 
@@ -33,12 +33,12 @@ public class DirectoryExplorer {
         }
 
         System.out.println("\n ------------------ SUMMARRY -------------------");
-        System.out.println("All (count: " + logsArray.size() + ") error logs:");
-        System.out.println(logsArray);
+        System.out.println("Founded " + logsArray.size() + " error logs.");
 
+        return logsArray;
     }
 
-    public static void readDirectory(File[] files, int level, List<String> logArray) throws IOException {
+    private static void readDirectory(File[] files, int level, List<String> logArray) throws IOException {
         level++;
         for (File file : files) {
             if (file.isDirectory()) {
@@ -48,12 +48,16 @@ public class DirectoryExplorer {
             } else {
                 printTabsByLevel(level);
                 System.out.print("File: " + file.getName());
-                LogFileParser.analyzeFile(file, logArray);
+                if (file.getName().contains("Err")) {
+                    LogFileParser.analyzeFile(file, logArray);
+                } else {
+                    System.out.print("\n");
+                }
             }
         }
     }
 
-    public static void printTabsByLevel(int level) {
+    private static void printTabsByLevel(int level) {
         for (int i = 0; i <= level; ++i) {
             System.out.print("    ");
         }
